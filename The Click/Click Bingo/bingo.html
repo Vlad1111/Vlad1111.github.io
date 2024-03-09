@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Click bingo</title>
+        <script src="bingo.js"></script>
+        <script src="../../Effects/Confetti/confetti.js"></script>
+        <link rel="stylesheet" href="bingo.css">
+        <link rel="stylesheet" href="../../Effects/Confetti/confetti.css">
+    </head>
+    <body>
+
+        <a href="../../index.html">Back</a>
+        <h1>Click bingo</h1>
+
+        <button type="button" onclick="fireConfetti()">Confetti</button>
+
+        <bingo></bingo>
+
+        <confetti_body>
+            <confetti style="top: 100%; left: 0;" dirx="-3" diry="-1.5" spread="25"></confetti> 
+            <confetti style="top: 100%; left: 100%;" dirx="-3" diry="1.5" spread="25"></confetti> 
+        </confetti_body>
+    </body>
+</html>

@@ -1,0 +1,20 @@
+.ConfettiBody{
+    position: absolute;
+    padding: 0;
+    margin: 0;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    pointer-events: none;
+}
+.Confetti{
+    position: absolute;
+}
+
+.Confetti div{
+    position: absolute;
+    height: 1.5vh;
+    width: 3vh;
+}
