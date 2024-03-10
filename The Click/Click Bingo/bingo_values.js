@@ -1,7 +1,8 @@
 const FaceConstantElm = ["<div style=\"font-size: calc(min(80vh, 80vw) / 10);\">😐</div>", "white", ""];
 const WholesomeConstantElm = ["✨ actually wholesome ✨", "random", ""];
-let BingoType = "bad female anatomy";
-
+let BingoType = sessionStorage.getItem("BingoType");
+if(BingoType == null)
+    BingoType = "bad female anatomy";
 let TableTypeElement = 
 {
     "bad female anatomy" : [

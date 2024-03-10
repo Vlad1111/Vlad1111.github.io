@@ -2,6 +2,7 @@ class ConfettiClass{
     node;
     x; y;
     rotation;
+    rotation_speed;
     dirX; dirY;
     time;
     is_deleted;
@@ -11,6 +12,7 @@ class ConfettiClass{
         this.x = _x;
         this.y = _y;
         this.rotation = _rotation;
+        this.rotation_speed = Math.random() * 20 + 8;
         this.dirX = _dirX;
         this.dirY = _dirY;
         this.time = _time;
@@ -61,7 +63,7 @@ function updateConfetti(confetti)
         conf.x += conf.dirX * 10;
         conf.y += conf.dirY * 10;
         conf.dirX += 0.1;
-        conf.rotation += 10;
+        conf.rotation += conf.rotation_speed;
         conf.time -= 20;
         if(conf.time <= 0)
             conf.node.remove(); 
@@ -99,7 +101,7 @@ function fireConfetti()
             let newDirX = Math.sin(newAngle) * newMagnitude;
             let newDirY = Math.cos(newAngle) * newMagnitude;
 
-            confetti.push(new ConfettiClass(node, 0, 0, Math.random() * 180, newDirX, newDirY, 1000 + Math.random() * 200));
+            confetti.push(new ConfettiClass(node, 0, 0, Math.random() * 180, newDirX, newDirY, 2000 + Math.random() * 200));
         }
     }
     updateConfetti(confetti);

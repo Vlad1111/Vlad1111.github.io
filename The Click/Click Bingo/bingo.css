@@ -79,9 +79,10 @@ body{
     font-family: Impact;
 }
 
-.circle {
+.Circle {
   aspect-ratio: 1 / 1;
   background-color: #ff000060;
   border-radius: 50%;
-  width: 50vw;
+  width: calc(min(80vh, 95vw) / 5 - 5px) !important;
+  height: calc(min(80vh, 95vw) / 5 - 5px) !important;
 }

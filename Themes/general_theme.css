@@ -1,29 +1,54 @@
 body {
     background-color: var(--main-bg-color);
     color: var(--main-color-main);
+    font-size:1.2em;
 }
 
 select {
     background-color: var(--main-bg-color);
     color: var(--main-color-main);
+    width: min(80vw, 30vh);
+    height: 5vh;
+    font-size:1em;
 }
 
-/* unvisited link */
+p {
+    padding-left: 2%;
+    max-width: 98%;
+}
+
+h1 {
+    max-width: 20vw;
+}
+
 a:link {
     color: var(--main-color-1);;
 }
-  
-/* visited link */
 a:visited {
     color: var(--main-color-2);;
 }
-
-/* mouse over link */
 a:hover {
     color: var(--main-color-main);
 }
-
-/* selected link */
 a:active {
     color: var(--main-color-3);;
+}
+
+.Header {
+    display: flex;
+}
+.Header .Title{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    max-width: 18%;
+    padding-left: 1%;
+    padding-right: 1%;
+}
+.Header .Items{
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: stretch;
 }

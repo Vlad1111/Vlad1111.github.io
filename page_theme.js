@@ -27,12 +27,9 @@ function setTheme(theme = null){
     
     if(theme == null){
         theme = getCookie("Theme");
-        console.log(theme);
         if(theme == null)
             theme = "dark";
         let select = document.getElementById('theme_select');
-        console.log(select);
-        console.log(document);
         if(select != null && select != undefined)
             select.value = theme;
     }

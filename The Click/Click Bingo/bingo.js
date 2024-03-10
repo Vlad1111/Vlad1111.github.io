@@ -52,7 +52,7 @@ function reinitializeBingoTable()
 
 function getCircleHtml()
 {
-    let html =  "<li><div class=\"circle\" ";
+    let html =  "<li><div class=\"Circle\" ";
 
     html += "style=\"margin: ";
 
@@ -184,6 +184,7 @@ function changeTags(parent){
     {
         myTypeSelect.innerHTML += "<option value=\"" + key + "\">" + key + "</option>"
     }
+    myTypeSelect.value = BingoType;
 
     let myTags = parent.getElementsByTagName('bingo');
     if(myTags)
@@ -195,6 +196,7 @@ function changeTags(parent){
             myTypeSelect.onchange= () => {
                 BingoType = myTypeSelect.value;
                 instantiateBingoTable(tag);
+                sessionStorage.setItem("BingoType", BingoType);
             };
         }
 }
