@@ -11,8 +11,8 @@ body{
     align-items: center;
 }
 .ClickBingo table{
-    height: min(80vh, 80vw);
-    width: min(80vh, 80vw);
+    height: min(80vh, 95vw);
+    width: min(80vh, 95vw);
     /*padding: 0 0 0 calc(100vw / 2 - 25vh / 2 - 20px);*/
     border-spacing: 0px;
     align-items: center;
@@ -42,8 +42,8 @@ body{
 
 .ClickBingo table tr td div{
     aspect-ratio: 1 / 1;
-    height: calc(min(80vh, 80vw) / 5 - 20px);
-    width: calc(min(80vh, 80vw) / 5 - 20px);
+    height: calc(min(80vh, 95vw) / 5 - 20px);
+    width: calc(min(80vh, 95vw) / 5 - 20px);
     -webkit-user-select: none; /* Safari */        
     -moz-user-select: none; /* Firefox */
     -ms-user-select: none; /* IE10+/Edge */
@@ -71,9 +71,9 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: calc(min(80vh, 80vw) / 28);
+    font-size: calc(min(80vh, 95vw) / 28);
     text-align: center;
-    -webkit-text-stroke: calc(min(80vh, 80vw) / 800) rgb(0, 0, 0); /* width and color */
+    -webkit-text-stroke: calc(min(80vh, 95vw) / 800) rgb(0, 0, 0); /* width and color */
     color: rgb(255, 255, 255);
     font-weight: bold;
     font-family: Impact;
