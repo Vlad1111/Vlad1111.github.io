@@ -80,6 +80,8 @@ body{
 }
 
 .circle {
+  aspect-ratio: 1 / 1;
   background-color: #ff000060;
   border-radius: 50%;
+  width: 50vw;
 }

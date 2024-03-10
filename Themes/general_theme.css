@@ -1,0 +1,29 @@
+body {
+    background-color: var(--main-bg-color);
+    color: var(--main-color-main);
+}
+
+select {
+    background-color: var(--main-bg-color);
+    color: var(--main-color-main);
+}
+
+/* unvisited link */
+a:link {
+    color: var(--main-color-1);;
+}
+  
+/* visited link */
+a:visited {
+    color: var(--main-color-2);;
+}
+
+/* mouse over link */
+a:hover {
+    color: var(--main-color-main);
+}
+
+/* selected link */
+a:active {
+    color: var(--main-color-3);;
+}

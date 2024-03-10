@@ -1,35 +1,3 @@
-let TableTypeElement = 
-{
-    "bad female anatomy" : [
-        ["<div style=\"font-size: calc(min(80vh, 80vw) / 10);\">😐</div>", "white", ""],
-        ["✨ actually wholesome ✨", "random", ""],
-        ["a man wrote this", "random", ""],
-        ["victim blaming", "random", ""],
-        ["made up stats", "random", ""],
-        ["bad anatomy", "random", ""],
-        ["twitter alpha male", "random", ""],
-        ["fake s** facts", "random", ""],
-        ["I made this up to get mad about", "random", ""],
-        ["no means \"_____\"", "random", ""],
-        ["something something kids n' family", "random", ""],
-        ["WTF", "random", ""],
-        ["Barely literate", "random", ""],
-        ["I can tell you're gay", "random", "https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Gay_Pride_Flag.svg/1920px-Gay_Pride_Flag.svg.png"],
-        ["period ???", "random", ""],
-        ["bad anatomy", "random", ""],
-        ["sloot \"logic\"", "random", ""],
-        ["purity", "random", ""],
-        ["endorse abuse", "random", ""],
-        ["gate-keep", "random", ""],
-        ["down bad", "random", ""],
-        ["pickup artistry", "random", ""],
-        ["age stuff", "random", ""],
-        ["sloot shaming", "random", ""],
-        ["pointless gender war", "random", ""]
-    ]
-};
-
-let BingoType = "bad female anatomy";
 let BingoTable = [];
 let BingoTableBlobCount = [];
 
@@ -46,15 +14,15 @@ function reinitializeBingoTable()
         }
     }
 
-    BingoTable[2][2] = 0;
-    BingoTable[4][4] = 1;
+    BingoTable[2][2] = -2;
+    BingoTable[4][4] = -3;
     for(let i=0;i<5;i++)
         for(let j=0;j<5;j++)
             if(BingoTable[i][j] == -1)
             {
                 do
                 {
-                    item = Math.floor(Math.random()*(TableTypeElement[BingoType].length-2))+2;
+                    item = Math.floor(Math.random()*(TableTypeElement[BingoType].length));
                     let its_not_used = true;
                     for(let k=0;k<5;k++)
                         for(let l=0;l<5;l++)
@@ -73,7 +41,12 @@ function reinitializeBingoTable()
     for(let i=0;i<5;i++)
         for(let j=0;j<5;j++)
            {
-                BingoTable[i][j] = TableTypeElement[BingoType][BingoTable[i][j]];
+                if(BingoTable[i][j] == -2)
+                    BingoTable[i][j] = FaceConstantElm;
+                else if(BingoTable[i][j] == -3)
+                    BingoTable[i][j] = WholesomeConstantElm;
+                else
+                    BingoTable[i][j] = TableTypeElement[BingoType][BingoTable[i][j]];
            } 
 }
 
@@ -206,12 +179,23 @@ function instantiateBingoTable(bT)
 }
 
 function changeTags(parent){
+    let myTypeSelect = document.getElementById("bingo_type");
+    for(let key in TableTypeElement)
+    {
+        myTypeSelect.innerHTML += "<option value=\"" + key + "\">" + key + "</option>"
+    }
+
     let myTags = parent.getElementsByTagName('bingo');
     if(myTags)
         for(let i=0;i<myTags.length;i++){
             let tag = myTags[i];
             tag.innerHTML = ""
             instantiateBingoTable(tag);
+
+            myTypeSelect.onchange= () => {
+                BingoType = myTypeSelect.value;
+                instantiateBingoTable(tag);
+            };
         }
 }
 

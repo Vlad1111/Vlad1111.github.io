@@ -2,23 +2,29 @@
 <html>
     <head>
         <title>Click bingo</title>
-        <script src="bingo.js"></script>
+
+        <script src="../../page_theme.js"></script>
+
         <script src="../../Effects/Confetti/confetti.js"></script>
-        <link rel="stylesheet" href="bingo.css">
         <link rel="stylesheet" href="../../Effects/Confetti/confetti.css">
+
+        <script src="bingo_values.js"></script>
+        <script src="bingo.js"></script>
+        <link rel="stylesheet" href="bingo.css">
     </head>
     <body>
 
         <a href="../../index.html">Back</a>
-        <h1>Click bingo</h1>
+        <h1>Clicky bingo</h1>
 
-        <button type="button" onclick="fireConfetti()">Confetti</button>
+        <select name="type" id="bingo_type">
+        </select>
 
         <bingo></bingo>
 
         <confetti_body>
-            <confetti style="top: 100%; left: 0;" dirx="-3" diry="-1.5" spread="25"></confetti> 
-            <confetti style="top: 100%; left: 100%;" dirx="-3" diry="1.5" spread="25"></confetti> 
+            <confetti style="top: 100%; left: 0;" dirx="-3" diry="-2" spread="25"></confetti> 
+            <confetti style="top: 100%; left: 100%;" dirx="-3" diry="2" spread="25"></confetti> 
         </confetti_body>
     </body>
 </html>

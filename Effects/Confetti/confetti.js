@@ -24,7 +24,6 @@ function registerConfettiSpawnPoints(parent)
     let conBody = parent.getElementsByTagName('confetti_body')[0];
     if(conBody != null && conBody != undefined)
     {
-        console.log(conBody);
         conBody.classList.add("ConfettiBody");
     
         let myTags = conBody.getElementsByTagName('confetti');
@@ -76,7 +75,6 @@ function updateConfetti(confetti)
 
 function fireConfetti()
 {
-    console.log("Fired");
     let confetti = [];
     for(let i=0;i<ConfettiSpawn.length;i++)
     {
@@ -89,8 +87,7 @@ function fireConfetti()
             spread = 10;
         else spread = Number(spread);
         const magnitude = calcMagnitude(dirX, dirY);
-
-        console.log(dirX +" " + dirY);
+        
         for(let nrC = 0; nrC < 50; nrC++)
         {
             const node = document.createElement("div");

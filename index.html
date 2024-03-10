@@ -1,7 +1,16 @@
 <!DOCTYPE html>
 <html>
+    <head>
+        <script src="page_theme.js"></script>
+    </head>
 <body>
 
+    <label for="theme_select">Theme:</label>
+    <select name="themes" id="theme_select" onchange="onThemeChange()">
+        <option value="dark">Dark theme</option>
+        <option value="light">Light theme</option>
+        <option value="night">Night theme</option>
+    </select>
     <h1>Pages:</h1>
     <ul>
         <li><a href="The Click/Click Bingo/bingo.html">Click bingo</a></li>
