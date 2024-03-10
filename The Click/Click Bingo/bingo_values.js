@@ -34,7 +34,7 @@ let TableTypeElement =
         ["\"asking for it\"", "random", ""],
         ["fake stats", "random", ""],
         ["excusing cheating", "random", ""],
-        ["s**ualizing no s**ual things", "random", ""],
+        ["s**ualizing non s**ual things", "random", ""],
         ["women vs women", "random", ""]
     ],
     "insane parents" : [
@@ -77,6 +77,7 @@ let TableTypeElement =
         ["sus contact", "random", ""],
         ["cult vibes", "random", ""],
         ["child neglect", "random", ""],
-        ["violent", "random", ""],
+        ["✨ violent ✨", "random", ""],
+        ["WTF", "random", ""],
     ]
 };
