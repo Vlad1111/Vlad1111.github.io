@@ -23,9 +23,29 @@ function eraseCookie(name) {
 
 RelativePathToRoot = "";
 
-function setTheme(theme = null){
-    // Get HTML head element
+function addStylesheetToHeader(name)
+{
+    name = RelativePathToRoot + name;
+
+    // Create new link specific theme
+    let link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = name;
     let head = document.getElementsByTagName('HEAD')[0];
+    head.appendChild(link);
+}
+
+function addScriptNeeded(name)
+{
+    name = RelativePathToRoot + name;
+
+    let script = document.createElement('script');
+    script.src = name;
+    let head = document.getElementsByTagName('HEAD')[0];
+    head.prepend(script);
+}
+
+function setTheme(theme = null){
     
     if(theme == null){
         theme = getCookie("Theme");
@@ -40,28 +60,29 @@ function setTheme(theme = null){
     RelativePathToRoot = "";
     for(let i=0;i<folders.length - 2;i++)
         RelativePathToRoot += "../";
-    let linkToCss = RelativePathToRoot + "Themes/";
 
-    var links = head.getElementsByTagName("link");
-    for(let i=0;i<links.length;i++){
-        node=links[i];
-        var href = node.getAttribute("href");
-        if(href != null && href != undefined)
-            if(href.startsWith(linkToCss))
-                node.remove();
-    }
+    //var links = head.getElementsByTagName("link");
+    //for(let i=0;i<links.length;i++){
+    //    node=links[i];
+    //    var href = node.getAttribute("href");
+    //    if(href != null && href != undefined)
+    //        if(href.startsWith(linkToCss))
+    //            node.remove();
+    //}
     
     // Create new link specific theme
-    let link = document.createElement('link');
-    link.rel = 'stylesheet';
-    link.href = linkToCss + theme + "_mode.css";
-    head.appendChild(link);
+    //let link = document.createElement('link');
+    //link.rel = 'stylesheet';
+    //link.href = linkToCss + theme + "_mode.css";
+    //head.appendChild(link);
+    addStylesheetToHeader("Themes/" + theme + "_mode.css");
     
     // Create new link general theme
-    link = document.createElement('link');
-    link.rel = 'stylesheet';
-    link.href = linkToCss + "general_theme.css";
-    head.appendChild(link);
+    //link = document.createElement('link');
+    //link.rel = 'stylesheet';
+    //link.href = linkToCss + "general_theme.css";
+    //head.appendChild(link);
+    addStylesheetToHeader("Themes/general_theme.css");
 }
 
 function onThemeChange(){
