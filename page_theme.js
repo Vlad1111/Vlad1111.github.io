@@ -21,6 +21,8 @@ function eraseCookie(name) {
     document.cookie = name +'=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
 }
 
+RelativePathToRoot = "";
+
 function setTheme(theme = null){
     // Get HTML head element
     let head = document.getElementsByTagName('HEAD')[0];
@@ -35,10 +37,10 @@ function setTheme(theme = null){
     }
     
     let folders = document.location.href.replace(document.location.origin, "").split('/');
-    let linkToCss = "";
+    RelativePathToRoot = "";
     for(let i=0;i<folders.length - 2;i++)
-        linkToCss += "../";
-    linkToCss +="Themes/";
+        RelativePathToRoot += "../";
+    let linkToCss = RelativePathToRoot + "Themes/";
 
     var links = head.getElementsByTagName("link");
     for(let i=0;i<links.length;i++){
@@ -49,13 +51,13 @@ function setTheme(theme = null){
                 node.remove();
     }
     
-    // Create new link Element
+    // Create new link specific theme
     let link = document.createElement('link');
     link.rel = 'stylesheet';
     link.href = linkToCss + theme + "_mode.css";
     head.appendChild(link);
     
-    // Create new link Element
+    // Create new link general theme
     link = document.createElement('link');
     link.rel = 'stylesheet';
     link.href = linkToCss + "general_theme.css";
