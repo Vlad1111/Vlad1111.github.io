@@ -14,15 +14,16 @@ function reinitializeBingoTable()
         }
     }
 
-    BingoTable[2][2] = -2;
-    BingoTable[4][4] = -3;
+    BingoTable[0][0] = TableTypeElement[BingoType]["left_upper_piece"];
+    BingoTable[2][2] = TableTypeElement[BingoType]["center_piece"];
+    BingoTable[4][4] = TableTypeElement[BingoType]["right_lower_piece"];
     for(let i=0;i<5;i++)
         for(let j=0;j<5;j++)
             if(BingoTable[i][j] == -1)
             {
-                do
+                for(let nr_tries=0;nr_tries<50;nr_tries++)
                 {
-                    item = Math.floor(Math.random()*(TableTypeElement[BingoType].length));
+                    item = Math.floor(Math.random()*(TableTypeElement[BingoType]["items"].length));
                     let its_not_used = true;
                     for(let k=0;k<5;k++)
                         for(let l=0;l<5;l++)
@@ -34,7 +35,6 @@ function reinitializeBingoTable()
                     if(its_not_used)
                         break;
                 }
-                while(true);
                 BingoTable[i][j] = item;
                 //TableTypeElement[BingoType][Math.floor(Math.random()*(TableTypeElement[BingoType].length-2))+2];
             }
@@ -45,8 +45,10 @@ function reinitializeBingoTable()
                     BingoTable[i][j] = FaceConstantElm;
                 else if(BingoTable[i][j] == -3)
                     BingoTable[i][j] = WholesomeConstantElm;
+                else if(BingoTable[i][j] == -4)
+                    BingoTable[i][j] = CursedConstantElm;
                 else
-                    BingoTable[i][j] = TableTypeElement[BingoType][BingoTable[i][j]];
+                    BingoTable[i][j] = TableTypeElement[BingoType]["items"][BingoTable[i][j]];
            } 
 }
 
@@ -153,6 +155,7 @@ function remakeBingoTableInnerHtml(bT)
             if(back_color == "random")
             {
                 back_color = getRandomColor(100, 0.8);
+                BingoTable[i][j][1] = back_color;
             }
             innerHtml += "style=\"background-color: " + back_color + ";";
             const back_image = BingoTable[i][j][2];
@@ -176,6 +179,17 @@ function instantiateBingoTable(bT)
     bT.classList.add("ClickBingo");
     reinitializeBingoTable();
     remakeBingoTableInnerHtml(bT);
+}
+
+function resetCurrentBoard(){
+    let bT = document.body.getElementsByTagName('bingo')[0];
+    if(bT != null && bT != undefined)
+    {
+        for(let i=0;i<5;i++)
+            for(let j=0;j<5;j++)
+                BingoTableBlobCount[i][j] = 0;
+        remakeBingoTableInnerHtml(bT);
+    }
 }
 
 function changeTags(parent){

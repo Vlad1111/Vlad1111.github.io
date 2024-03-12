@@ -27,11 +27,21 @@ function addStylesheetToHeader(name)
 {
     name = RelativePathToRoot + name;
 
+    let head = document.getElementsByTagName('HEAD')[0];
+    var links = head.getElementsByTagName("link");
+    for(let i=0;i<links.length;i++){
+        node=links[i];
+        var href = node.getAttribute("href");
+        if(href != null && href != undefined)
+            if(href == name)
+                return;
+    }
+
     // Create new link specific theme
     let link = document.createElement('link');
     link.rel = 'stylesheet';
     link.href = name;
-    let head = document.getElementsByTagName('HEAD')[0];
+
     head.appendChild(link);
 }
 
@@ -60,15 +70,6 @@ function setTheme(theme = null){
     RelativePathToRoot = "";
     for(let i=0;i<folders.length - 2;i++)
         RelativePathToRoot += "../";
-
-    //var links = head.getElementsByTagName("link");
-    //for(let i=0;i<links.length;i++){
-    //    node=links[i];
-    //    var href = node.getAttribute("href");
-    //    if(href != null && href != undefined)
-    //        if(href.startsWith(linkToCss))
-    //            node.remove();
-    //}
     
     // Create new link specific theme
     //let link = document.createElement('link');
