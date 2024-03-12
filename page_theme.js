@@ -65,12 +65,12 @@ function setTheme(theme = null){
     
     let head = document.getElementsByTagName('HEAD')[0];
     var links = head.getElementsByTagName("link");
-    for(let i=0;i<links.length;i++){
+    for(let i=links.length-1;i>=0;i--){
         node=links[i];
         var href = node.getAttribute("href");
         if(href != null && href != undefined)
-            if(href.startsWith(RelativePathToRoot + "/Themes"))
-                return;
+            if(href.startsWith(RelativePathToRoot + "Themes"))
+                node.remove();
     }
     // Create new link specific theme
     //let link = document.createElement('link');
