@@ -14,9 +14,16 @@ function reinitializeBingoTable()
         }
     }
 
-    BingoTable[0][0] = TableTypeElement[BingoType]["left_upper_piece"];
-    BingoTable[2][2] = TableTypeElement[BingoType]["center_piece"];
-    BingoTable[4][4] = TableTypeElement[BingoType]["right_lower_piece"];
+    //BingoTable[0][0] = TableTypeElement[BingoType]["left_upper_piece"];
+    //BingoTable[2][2] = TableTypeElement[BingoType]["center_piece"];
+    //BingoTable[4][4] = TableTypeElement[BingoType]["right_lower_piece"];
+    let constElms = TableTypeElement[BingoType]["const_elms"];
+    if(constElms != null && constElms != undefined && constElms.length > 0)
+    constElms.forEach((elm) =>{
+        const i = parseInt(elm[0]*4);
+        const j = parseInt(elm[1]*4);
+        BingoTable[i][j] = elm[2];
+    });
     for(let i=0;i<5;i++)
         for(let j=0;j<5;j++)
             if(BingoTable[i][j] == -1)
@@ -41,12 +48,8 @@ function reinitializeBingoTable()
     for(let i=0;i<5;i++)
         for(let j=0;j<5;j++)
            {
-                if(BingoTable[i][j] == -2)
-                    BingoTable[i][j] = FaceConstantElm;
-                else if(BingoTable[i][j] == -3)
-                    BingoTable[i][j] = WholesomeConstantElm;
-                else if(BingoTable[i][j] == -4)
-                    BingoTable[i][j] = CursedConstantElm;
+                if(BingoTable[i][j] <= -2)
+                    BingoTable[i][j] = ConstantElms[-BingoTable[i][j]];
                 else
                     BingoTable[i][j] = TableTypeElement[BingoType]["items"][BingoTable[i][j]];
            } 

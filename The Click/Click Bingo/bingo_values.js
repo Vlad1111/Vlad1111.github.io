@@ -1,15 +1,16 @@
-const FaceConstantElm = ["<div style=\"font-size: calc(min(80vh, 80vw) / 10);\">😐</div>", "white", ""];
-const WholesomeConstantElm = ["✨ actually wholesome ✨", "random", ""];
-const CursedConstantElm = ["💫 actually cursed 💫", "random", ""];
+const ConstantElms = {
+    2: ["<div style=\"font-size: calc(min(80vh, 80vw) / 10);\">😐</div>", "white", ""],
+    3: ["✨ actually wholesome ✨", "random", ""],
+    4: ["actually cursed</br><p style='line-height:0.6;'>😲</br>🙏</p>", "random", ""],
+    5: ["👱‍♀️ doing voices while reading 👦", "random", ""],
+};
 let BingoType = sessionStorage.getItem("BingoType");
 if(BingoType == null)
     BingoType = "bad female anatomy";
 let TableTypeElement = 
 {
     "click video (beta version)":{
-        "left_upper_piece":-4,
-        "center_piece": -1,
-        "right_lower_piece":-3,
+        "const_elms": [[1,0,-4], [1,1,-3], [0.5,0.5,-5]],
         "items":[
                 ["inhuman sounds", "random", ""],
                 ["click academy", "random", ""],
@@ -20,22 +21,29 @@ let TableTypeElement =
                 ["good life advice", "random", ""],
                 ["bad advice (not indorsed)", "random", ""],
                 ["good evil advice", "random", ""],
-                ["<div style='line-height:0.7;font-size: calc(min(80vh, 80vw) / 20)'>😳</br>🙏</div>", "random", ""],
-                ["so. much. censuring!", "random", ""],
+                ["so. much. f**king. censuring!", "random", ""],
                 ["quality facebook trash", "random", ""],
                 ["literally laughing on the floor", "random", ""],
                 ["\"it's still going?!\"", "random", ""],
                 ["\"sir, that's a child!\"", "random", ""],
                 ["plushy mentioned", "random", ""],
                 ["going outside on a trip", "random", ""],
-                ["overly bad grammar", "random", ""],
+                ["meme with overly bad grammar", "random", ""],
                 ["that's not in the bible", "random", ""],
+                ["kids being kids", "random", ""],
+                ["cringe youtube comments", "random", ""],
+                ["<div style=\"font-size: calc(min(80vh, 80vw) / 15);\">😬</div>", "random", ""],
+                ["just click being a nerd", "random", ""],
+                ["click speaking swedish", "random", ""],
+                ["that's not how a body works", "random", ""],
+                ["<div style='font-size: calc(min(80vh, 80vw) / 15);'>🥵</div>", "random", ""],
+                ["\"what is a furry?\"", "random", ""],
+                ["true gender equality", "random", ""],
+                ["lil' cute animal", "random", ""],
             ]
     },
     "bad female anatomy" : {
-        "left_upper_piece":-1,
-        "center_piece": -2,
-        "right_lower_piece":-3,
+        "const_elms": [[0.5,0.5,-2], [1,1,-3]],
         "items":[
                 ["a man wrote this", "random", ""],
                 ["victim blaming", "random", ""],
@@ -72,9 +80,7 @@ let TableTypeElement =
             ]
     },
     "insane parents" : {
-        "left_upper_piece":-1,
-        "center_piece": -2,
-        "right_lower_piece":-3,
+        "const_elms": [[0.5,0.5,-2], [1,1,-3]],
         "items":[
                 ["trashing property", "random", ""],
                 ["political nonsense", "random", ""],
