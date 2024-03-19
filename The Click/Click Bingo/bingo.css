@@ -86,3 +86,9 @@ body{
   width: calc(min(80vh, 95vw) / 5 - 5px) !important;
   height: calc(min(80vh, 95vw) / 5 - 5px) !important;
 }
+
+input{
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}

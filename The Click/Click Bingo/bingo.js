@@ -14,9 +14,6 @@ function reinitializeBingoTable()
         }
     }
 
-    //BingoTable[0][0] = TableTypeElement[BingoType]["left_upper_piece"];
-    //BingoTable[2][2] = TableTypeElement[BingoType]["center_piece"];
-    //BingoTable[4][4] = TableTypeElement[BingoType]["right_lower_piece"];
     let constElms = TableTypeElement[BingoType]["const_elms"];
     if(constElms != null && constElms != undefined && constElms.length > 0)
     constElms.forEach((elm) =>{
@@ -177,6 +174,67 @@ function remakeBingoTableInnerHtml(bT)
     bT.innerHTML = innerHtml;
 }
 
+function editCell(i, j, part){
+    const input = document.getElementsByName("cell " + i + " " + j)[0];
+
+}
+
+function remakeEditableBingoTableInnerHtml(bT){
+    let innerHtml = "";
+    innerHtml += "<div>The tree inputs:";
+    innerHtml += "<ol>";
+    innerHtml += "<li>Cell text (can inject html code using this)</li>";
+    innerHtml += "<li>Cell color (put 'random' for random color)</li>";
+    innerHtml += "<li>Cell background url</li>";
+    innerHtml += "</ol></div>";
+    bT.innerHTML = innerHtml;
+    
+    let table = document.createElement('table');
+    bT.appendChild(table);
+
+    for(let i=0;i<5;i++)
+    {
+        let tr = document.createElement('tr');
+        table.appendChild(tr);
+        for(let j=0;j<5;j++)
+        {
+            let td = document.createElement('td');
+            tr.appendChild(td);
+            let back_color = BingoTable[i][j][1];
+            if(back_color == "random")
+            {
+                back_color = getRandomColor(100, 0.8);
+                BingoTable[i][j][1] = back_color;
+            }
+            td.style.backgroundColor = back_color;
+            const back_image = BingoTable[i][j][2];
+            if(back_image != "")
+                td.style.backgroundImage = back_image;
+            
+            let input = document.createElement('input');
+            input.setAttribute('i', i);
+            input.setAttribute('j', j);
+            input.setAttribute('t', 0);
+            input.value = BingoTable[i][j][0];
+            td.appendChild(input);
+
+            input = document.createElement('input');
+            input.setAttribute('i', i);
+            input.setAttribute('j', j);
+            input.setAttribute('t', 1);
+            input.value = BingoTable[i][j][1];
+            td.appendChild(input);
+
+            input = document.createElement('input');
+            input.setAttribute('i', i);
+            input.setAttribute('j', j);
+            input.setAttribute('t', 2);
+            input.value = BingoTable[i][j][2];
+            td.appendChild(input);
+        }
+    }
+}
+
 function instantiateBingoTable(bT)
 {
     bT.classList.add("ClickBingo");
@@ -193,6 +251,43 @@ function resetCurrentBoard(){
                 BingoTableBlobCount[i][j] = 0;
         remakeBingoTableInnerHtml(bT);
     }
+    let button = document.getElementById('edit_button');
+    button.removeAttribute("hidden");
+    button = document.getElementById('save_button');
+    button.setAttribute("hidden", true);
+}
+
+function editBoard(){
+    let bT = document.body.getElementsByTagName('bingo')[0];
+    if(bT != null && bT != undefined){
+        remakeEditableBingoTableInnerHtml(bT);
+    }
+    let button = document.getElementById('edit_button');
+    button.setAttribute("hidden", true);
+    button = document.getElementById('save_button');
+    button.removeAttribute("hidden"); 
+}
+
+function saveBoard(){
+    let bT = document.body.getElementsByTagName('bingo')[0];
+    if(bT != null && bT != undefined){
+        let inputs = document.body.getElementsByTagName('input');
+        if(inputs != null && inputs != undefined){
+            inputs = Array.from(inputs);
+            inputs.forEach((inp) => {
+                let i = Number(inp.getAttribute('i'));
+                let j = Number(inp.getAttribute('j'));
+                let t = Number(inp.getAttribute('t'));
+                BingoTable[i][j][t] = inp.value;
+            });
+        }
+
+        remakeBingoTableInnerHtml(bT);
+    }
+    let button = document.getElementById('edit_button');
+    button.removeAttribute("hidden");
+    button = document.getElementById('save_button');
+    button.setAttribute("hidden", true);
 }
 
 function changeTags(parent){

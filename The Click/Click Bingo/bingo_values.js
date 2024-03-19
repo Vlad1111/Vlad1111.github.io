@@ -1,8 +1,8 @@
 const ConstantElms = {
     2: ["<div style=\"font-size: calc(min(80vh, 80vw) / 10);\">😐</div>", "white", ""],
-    3: ["✨ actually wholesome ✨", "random", ""],
-    4: ["actually cursed</br><p style='line-height:0.6;'>😲</br>🙏</p>", "random", ""],
-    5: ["👱‍♀️ doing voices while reading 👦", "random", ""],
+    3: ["✨ actually wholesome ✨", "lightblue", ""],
+    4: ["actually cursed</br><p style='line-height:0.5;'>😲</br>🙏</p>", "red", ""],
+    5: ["👱‍♀️ doing voices while reading 👦", "white", ""],
 };
 let BingoType = sessionStorage.getItem("BingoType");
 if(BingoType == null)
@@ -29,7 +29,7 @@ let TableTypeElement =
                 ["plushy mentioned", "random", ""],
                 ["going outside on a trip", "random", ""],
                 ["meme with overly bad grammar", "random", ""],
-                ["that's not in the bible", "random", ""],
+                ["unhinge bible stuff", "random", ""],
                 ["kids being kids", "random", ""],
                 ["cringe youtube comments", "random", ""],
                 ["<div style=\"font-size: calc(min(80vh, 80vw) / 15);\">😬</div>", "random", ""],
@@ -40,6 +40,7 @@ let TableTypeElement =
                 ["\"what is a furry?\"", "random", ""],
                 ["true gender equality", "random", ""],
                 ["lil' cute animal", "random", ""],
+                ["\"fellas, is it gay to _____\"", "random", ""],
             ]
     },
     "bad female anatomy" : {
