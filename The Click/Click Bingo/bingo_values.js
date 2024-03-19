@@ -2,7 +2,7 @@ const ConstantElms = {
     2: ["<div style=\"font-size: calc(min(80vh, 80vw) / 10);\">😐</div>", "white", ""],
     3: ["✨ actually wholesome ✨", "lightblue", ""],
     4: ["actually cursed</br><p style='line-height:0.5;'>😲</br>🙏</p>", "red", ""],
-    5: ["👱‍♀️ doing voices while reading 👦", "white", ""],
+    5: ["doing voices while reading", "white", ""],
 };
 let BingoType = sessionStorage.getItem("BingoType");
 if(BingoType == null)
