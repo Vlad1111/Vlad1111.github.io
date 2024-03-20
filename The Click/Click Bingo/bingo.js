@@ -184,6 +184,14 @@ function onCellTextareaChangeInput() {
     this.style.height = (this.scrollHeight) + "px";
 }
 
+function applyCellColor(td, back_color){
+    if(back_color == "random")
+    {
+        back_color = getRandomColor(100, 0.8);
+    }
+    td.style.backgroundColor = back_color;
+}
+
 function remakeEditableBingoTableInnerHtml(bT){
     let innerHtml = "";
     innerHtml += "<div>The tree inputs:";
@@ -205,16 +213,9 @@ function remakeEditableBingoTableInnerHtml(bT){
         {
             let td = document.createElement('td');
             tr.appendChild(td);
-            let back_color = BingoTable[i][j][1];
-            if(back_color == "random")
-            {
-                back_color = getRandomColor(100, 0.8);
-                BingoTable[i][j][1] = back_color;
-            }
-            td.style.backgroundColor = back_color;
-            const back_image = BingoTable[i][j][2];
-            if(back_image != "")
-                td.style.backgroundImage = back_image;
+            applyCellColor(td, BingoTable[i][j][1])
+            if(BingoTable[i][j][2] != "")
+                td.style.backgroundImage = "url("+BingoTable[i][j][2]+")";
             
             let input = document.createElement('textarea');
             input.setAttribute("placeholder", "cell text")
@@ -235,6 +236,8 @@ function remakeEditableBingoTableInnerHtml(bT){
             input.setAttribute('j', j);
             input.setAttribute('t', 1);
             input.value = BingoTable[i][j][1];
+            const back_color = input;
+            input.addEventListener("input", () => {applyCellColor(td, back_color.value)}, false);
             td.appendChild(input);
 
             input = document.createElement('input');
@@ -243,6 +246,10 @@ function remakeEditableBingoTableInnerHtml(bT){
             input.setAttribute('j', j);
             input.setAttribute('t', 2);
             input.value = BingoTable[i][j][2];
+            const back_image = input;
+            input.addEventListener("input", () => {
+                td.style.backgroundImage = "url("+back_image.value+")";
+            }, false);
             td.appendChild(input);
         }
     }

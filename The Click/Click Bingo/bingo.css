@@ -36,9 +36,9 @@ body{
     border: 1px solid;
     margin: 0;
     padding: 10px;
-    background-size:     cover;                      /* <------ */
-    background-repeat:   no-repeat;
-    background-position: center center;              /* optional, center the image */
+    background-size: 100% 100%; 
+    background-repeat: no-repeat;
+    background-position: center center;
 }
 
 .ClickBingo table tr td div{
