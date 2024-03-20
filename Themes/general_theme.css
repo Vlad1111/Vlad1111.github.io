@@ -2,6 +2,9 @@ body {
     background-color: var(--main-bg-color);
     color: var(--main-color-main);
     font-size:1.2em;
+    max-width:100%;
+    padding: 0;
+    margin: 0;
 }
 
 select {
@@ -47,7 +50,7 @@ button:hover {
     background-color: var(--main-bg-color-2);
 }
 
-input {
+textarea, input {
     background-color: var(--main-bg-color);
     color: var(--main-color-1);
     font-size:inherit;
@@ -62,8 +65,8 @@ input {
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    width: 100%;
     max-width: 18%;
+    max-height: 5vh;
     padding-left: 1%;
     padding-right: 1%;
 }

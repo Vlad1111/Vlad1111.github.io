@@ -5,7 +5,8 @@ body{
     margin: 0;
 }
 .ClickBingo{
-    width: 100vw;
+    width: 100%;
+    max-width: 100vw;
     display: flex;
     flex-flow: column;
     align-items: center;
@@ -89,8 +90,10 @@ body{
   height: calc(min(80vh, 95vw) / 5 - 5px) !important;
 }
 
-input{
+textarea, input{
     width: 100%;
     padding: 0;
     margin: 0;
+    -webkit-line-clamp: unset;
+    resize: none;
 }

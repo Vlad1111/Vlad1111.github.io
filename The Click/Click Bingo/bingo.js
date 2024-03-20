@@ -179,6 +179,11 @@ function editCell(i, j, part){
 
 }
 
+function onCellTextareaChangeInput() {
+    this.style.height = 'auto';
+    this.style.height = (this.scrollHeight) + "px";
+}
+
 function remakeEditableBingoTableInnerHtml(bT){
     let innerHtml = "";
     innerHtml += "<div>The tree inputs:";
@@ -211,14 +216,21 @@ function remakeEditableBingoTableInnerHtml(bT){
             if(back_image != "")
                 td.style.backgroundImage = back_image;
             
-            let input = document.createElement('input');
+            let input = document.createElement('textarea');
+            input.setAttribute("placeholder", "cell text")
             input.setAttribute('i', i);
             input.setAttribute('j', j);
             input.setAttribute('t', 0);
             input.value = BingoTable[i][j][0];
+            input.addEventListener("input", onCellTextareaChangeInput, false);
+            const textarea = input;
+            setTimeout(()=>{
+                    textarea.setAttribute("style", "height:" + (textarea.scrollHeight) + "px;overflow-y:hidden;");
+                }, 100);
             td.appendChild(input);
 
             input = document.createElement('input');
+            input.setAttribute("placeholder", "back color")
             input.setAttribute('i', i);
             input.setAttribute('j', j);
             input.setAttribute('t', 1);
@@ -226,6 +238,7 @@ function remakeEditableBingoTableInnerHtml(bT){
             td.appendChild(input);
 
             input = document.createElement('input');
+            input.setAttribute("placeholder", "back image url")
             input.setAttribute('i', i);
             input.setAttribute('j', j);
             input.setAttribute('t', 2);
@@ -272,8 +285,11 @@ function saveBoard(){
     let bT = document.body.getElementsByTagName('bingo')[0];
     if(bT != null && bT != undefined){
         let inputs = document.body.getElementsByTagName('input');
+        let textareaInputs = document.body.getElementsByTagName('textarea');
         if(inputs != null && inputs != undefined){
             inputs = Array.from(inputs);
+            if(textareaInputs != null && textareaInputs != undefined)
+                Array.prototype.push.apply(inputs, textareaInputs);
             inputs.forEach((inp) => {
                 let i = Number(inp.getAttribute('i'));
                 let j = Number(inp.getAttribute('j'));
