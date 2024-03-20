@@ -16,11 +16,13 @@ function reinitializeBingoTable()
 
     let constElms = TableTypeElement[BingoType]["const_elms"];
     if(constElms != null && constElms != undefined && constElms.length > 0)
-    constElms.forEach((elm) =>{
-        const i = parseInt(elm[0]*4);
-        const j = parseInt(elm[1]*4);
-        BingoTable[i][j] = elm[2];
-    });
+        constElms.forEach((elm) =>{
+            if(elm != null){
+                const i = parseInt(elm[0]*4);
+                const j = parseInt(elm[1]*4);
+                BingoTable[i][j] = elm[2];
+            }
+        });
     for(let i=0;i<5;i++)
         for(let j=0;j<5;j++)
             if(BingoTable[i][j] == -1)
@@ -134,10 +136,10 @@ function verifyBingo(i, j)
 function getRandomColor(base, alpha)
 {
     return "rgb(" +
-        Math.floor(Math.random() * (255 - base) + base) + ", " +
-        Math.floor(Math.random() * (255 - base) + base) + ", " +
+        Math.floor(Math.random() * (255 - base) + base) + "," +
+        Math.floor(Math.random() * (255 - base) + base) + "," +
         Math.floor(Math.random() * (255 - base) + base) +
-        ", " + alpha + ")";
+        "," + alpha + ")";
 }
 
 function remakeBingoTableInnerHtml(bT)
@@ -155,7 +157,7 @@ function remakeBingoTableInnerHtml(bT)
             if(back_color == "random")
             {
                 back_color = getRandomColor(100, 0.8);
-                BingoTable[i][j][1] = back_color;
+                //BingoTable[i][j][1] = back_color;
             }
             innerHtml += "style=\"background-color: " + back_color + ";";
             const back_image = BingoTable[i][j][2];

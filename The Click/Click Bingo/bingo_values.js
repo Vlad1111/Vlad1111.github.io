@@ -7,7 +7,7 @@ const ConstantElms = {
 let BingoType = sessionStorage.getItem("BingoType");
 if(BingoType == null)
     BingoType = "bad female anatomy";
-let TableTypeElement = 
+const InitialTableTypeElement = 
 {
     "click video (beta version)":{
         "const_elms": [[1,0,-4], [1,1,-3], [0.5,0.5,-5]],
@@ -126,3 +126,155 @@ let TableTypeElement =
             ]
     }
 };
+
+let board_json = sessionStorage.getItem("ClickBingoTableTypeElements");
+if(board_json == null || board_json == undefined){
+    board_json = getCookie("ClickBingoTableTypeElements");
+}
+let TableTypeElement = InitialTableTypeElement;
+if(board_json != null && board_json != undefined)
+    TableTypeElement = JSON.parse(board_json);
+
+function saveNewList(){
+    let json = JSON.stringify(TableTypeElement);
+    setCookie("ClickBingoTableTypeElements", json);
+    sessionStorage.setItem("ClickBingoTableTypeElements", json);
+}
+
+function populateOneElementOfList(parentUl, list, i, li_list){
+    const l = list[i];
+    const li = document.createElement('li');
+    li_list[i] = li;
+    li.style.paddingBottom = "30px";
+    parentUl.appendChild(li);
+    for(let j = 0; j < l.length; j++){
+        let input = document.createElement('input');
+        input.value = l[j];
+        const input_value = input;
+        input.addEventListener("input", () => {
+            l[j] = input_value.value; 
+            saveNewList();
+        }, false);
+        li.appendChild(input);
+    }
+    let deleteButton = document.createElement("button");
+    deleteButton.innerHTML = " remove ";
+    deleteButton.onclick = () => {
+        list.splice(i, 1);
+        li_list.forEach(elm => elm.remove());
+        saveNewList();
+        populateEditableListToNode(parentUl, list);
+    }
+    deleteButton.style.width = "25%";
+    li.appendChild(deleteButton);
+}
+
+function populateEditableListToNode(parentUl, list){
+    const li_list = [];
+    for(let i = 0; i < list.length; i++){
+        populateOneElementOfList(parentUl, list, i, li_list);
+    }
+
+    const li = document.createElement('li');
+    li_list[list.length] = li;
+    li.style.paddingBottom = "30px";
+    parentUl.appendChild(li);
+    
+    let addButton = document.createElement("button");
+    addButton.innerHTML = " add ";
+    addButton.onclick = () => {
+        if(list.length > 0)
+            list[list.length] = structuredClone(list[list.length - 1])
+        else list[list.length] = ["", "", ""];
+        li_list.forEach(elm => elm.remove());
+        saveNewList();
+        populateEditableListToNode(parentUl, list);
+    }
+    addButton.style.width = "25%";
+    li.appendChild(addButton);
+}
+
+function addEditableListToNode(node, list, label_text){
+    const ul = document.createElement('ul');
+    node.appendChild(ul);
+    ul.innerHTML = "<br/>" + label_text;
+    populateEditableListToNode(ul, list);
+}
+
+function populateElement(elm_key, elm_item, show){
+    let pElement = document.createElement('p');
+    let hideButton = document.createElement('button');
+    let emlContent = document.createElement('div');
+    
+    pElement.appendChild(hideButton);
+    pElement.appendChild(document.createTextNode(" " + elm_key));
+    hideButton.innerHTML = "| > |";
+    hideButton.onclick = function(){
+        if(emlContent.getAttribute("hidden")){
+            emlContent.removeAttribute("hidden");
+            hideButton.innerHTML = "| v |";
+        }
+        else{
+            emlContent.setAttribute("hidden", true);
+            hideButton.innerHTML = "| > |";
+        }
+    };
+    if(!show)
+        hideButton.onclick();
+    hideButton.style.width = "15%";
+
+    elm_item.appendChild(pElement);
+    elm_item.appendChild(emlContent);
+
+    if(elm_key in InitialTableTypeElement){
+        let button = document.createElement('button');
+        button.innerHTML = "Reset";
+        button.onclick = function() { 
+            TableTypeElement[elm_key] = InitialTableTypeElement[elm_key]; 
+            elm_item.innerHTML = "";
+            saveNewList();
+            populateElement(elm_key, elm_item, true);
+        };
+        emlContent.appendChild(button);
+    }
+
+    addEditableListToNode(emlContent, TableTypeElement[elm_key]["const_elms"], "Constants:");
+    addEditableListToNode(emlContent, TableTypeElement[elm_key]["items"], "Elements:");
+}
+
+function editTableTypeElements(){
+    let bT = document.body.getElementsByTagName('bingo')[0];
+    if(bT != null && bT != undefined){
+        bT.innerHTML = "";
+        
+        const instructions = document.createElement('p');
+        bT.appendChild(instructions);
+        instructions.innerHTML += "Constants are the cells that have always the same values<br/>";
+        instructions.innerHTML += " -the first 2 are the indexes (from 0 to 1)<br/>";
+        instructions.innerHTML += " -the first 3rd is the index of the message<br/>";
+        instructions.innerHTML += "<br/>";
+        instructions.innerHTML += "Elements are the cell values list from which it will be selected random<br/>";
+        instructions.innerHTML += " -the first is the text (you can inject html code in this one)<br/>";
+        instructions.innerHTML += " -the second is the background color (put 'random' to have a random color)<br/>";
+        instructions.innerHTML += " -the third is the background image url<br/>";
+
+        const elms_list = document.createElement('ul');
+        bT.appendChild(elms_list);
+        for(let elm_key in TableTypeElement){
+            elm_item = document.createElement('li');
+            elms_list.appendChild(elm_item);
+            populateElement(elm_key, elm_item, false);
+        }
+        elm_item = document.createElement('li');
+        elms_list.appendChild(elm_item);
+        let addButton = document.createElement('button');
+        addButton.innerHTML = "| + |";
+        addButton.onclick = function(){
+            alert("at the moment you can't add a new category. I'm working on that");
+        };
+        addButton.style.width = "15%";
+        let p = document.createElement('p');
+        p.appendChild(addButton);
+        elm_item.appendChild(p);
+    }
+}
