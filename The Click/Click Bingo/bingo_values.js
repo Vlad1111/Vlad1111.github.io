@@ -41,6 +41,7 @@ const InitialTableTypeElement =
                 ["true gender equality", "random", ""],
                 ["lil' cute animal", "random", ""],
                 ["\"fellas, is it gay to _____\"", "random", ""],
+                ["brand new sentence", "random", ""],
             ]
     },
     "bad female anatomy" : {
@@ -127,27 +128,46 @@ const InitialTableTypeElement =
     }
 };
 
-let board_json = sessionStorage.getItem("ClickBingoTableTypeElements");
-if(board_json == null || board_json == undefined){
-    board_json = getCookie("ClickBingoTableTypeElements");
-}
 let TableTypeElement = InitialTableTypeElement;
-if(board_json != null && board_json != undefined)
-    TableTypeElement = JSON.parse(board_json);
+loadList();
 
 function saveNewList(){
+    let keys = Object.keys(TableTypeElement);
     let json = JSON.stringify(TableTypeElement);
-    setCookie("ClickBingoTableTypeElements", json);
     sessionStorage.setItem("ClickBingoTableTypeElements", json);
+
+    eraseAllCookiesStartingWith("ClickBingoTableTypeElements");
+    setCookie("ClickBingoTableTypeElements_keys", JSON.stringify(keys));
+    keys.forEach(k => {
+        setCookie("ClickBingoTableTypeElements_"+k, JSON.stringify(TableTypeElement[k]));
+    });
 }
 
-function populateOneElementOfList(parentUl, list, i, li_list){
+function loadList(){
+    let board_json = sessionStorage.getItem("ClickBingoTableTypeElements");
+    if(board_json == null || board_json == undefined){
+        board_json = getCookie("ClickBingoTableTypeElements_keys");
+        let keys = JSON.parse(board_json);
+        TableTypeElement = {};
+        keys.forEach(k => {
+            board_json = getCookie("ClickBingoTableTypeElements_"+k);
+            if(board_json != null && board_json != undefined)
+                TableTypeElement[k] = JSON.parse(board_json);
+        });
+    }
+    else TableTypeElement = JSON.parse(board_json);
+}
+
+function populateOneElementOfList(parentUl, list, i, li_list, list_type){
     const l = list[i];
     const li = document.createElement('li');
     li_list[i] = li;
     li.style.paddingBottom = "30px";
     parentUl.appendChild(li);
-    for(let j = 0; j < l.length; j++){
+    let indexD = 0;
+    if(list_type == 1)
+        indexD = 1;
+    for(let j = 0; j < l.length - indexD; j++){
         let input = document.createElement('input');
         input.value = l[j];
         const input_value = input;
@@ -156,6 +176,26 @@ function populateOneElementOfList(parentUl, list, i, li_list){
             saveNewList();
         }, false);
         li.appendChild(input);
+    }
+    if(list_type == 1){
+        //Create and append select list
+        var selectList = document.createElement("select");
+        //selectList.id = "mySelect";
+        selectList.style.width = "100%";
+        li.appendChild(selectList);
+        
+        //Create and append the options
+        for (i in ConstantElms) {
+            var option = document.createElement("option");
+            option.value = -i;
+            option.innerHTML = ConstantElms[i][0];
+            selectList.appendChild(option);
+        }
+        selectList.value = l[2];
+        selectList.onchange = () => {
+            l[2] = selectList.value;
+            saveNewList();
+        }
     }
     let deleteButton = document.createElement("button");
     deleteButton.innerHTML = " remove ";
@@ -169,10 +209,10 @@ function populateOneElementOfList(parentUl, list, i, li_list){
     li.appendChild(deleteButton);
 }
 
-function populateEditableListToNode(parentUl, list){
+function populateEditableListToNode(parentUl, list, list_type){
     const li_list = [];
     for(let i = 0; i < list.length; i++){
-        populateOneElementOfList(parentUl, list, i, li_list);
+        populateOneElementOfList(parentUl, list, i, li_list, list_type);
     }
 
     const li = document.createElement('li');
@@ -194,11 +234,11 @@ function populateEditableListToNode(parentUl, list){
     li.appendChild(addButton);
 }
 
-function addEditableListToNode(node, list, label_text){
+function addEditableListToNode(node, list, label_text, list_type){
     const ul = document.createElement('ul');
     node.appendChild(ul);
     ul.innerHTML = "<br/>" + label_text;
-    populateEditableListToNode(ul, list);
+    populateEditableListToNode(ul, list, list_type);
 }
 
 function populateElement(elm_key, elm_item, show){
@@ -238,8 +278,8 @@ function populateElement(elm_key, elm_item, show){
         emlContent.appendChild(button);
     }
 
-    addEditableListToNode(emlContent, TableTypeElement[elm_key]["const_elms"], "Constants:");
-    addEditableListToNode(emlContent, TableTypeElement[elm_key]["items"], "Elements:");
+    addEditableListToNode(emlContent, TableTypeElement[elm_key]["const_elms"], "Constants:", 1);
+    addEditableListToNode(emlContent, TableTypeElement[elm_key]["items"], "Elements:", 0);
 }
 
 function editTableTypeElements(){

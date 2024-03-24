@@ -290,6 +290,13 @@ function editBoard(){
     button.removeAttribute("hidden"); 
 }
 
+function makeNewBoard(){
+    let bT = document.body.getElementsByTagName('bingo')[0];
+    if(bT != null && bT != undefined){
+        instantiateBingoTable(bT);
+    }
+}
+
 function saveBoard(){
     let bT = document.body.getElementsByTagName('bingo')[0];
     if(bT != null && bT != undefined){
