@@ -147,13 +147,15 @@ function loadList(){
     let board_json = sessionStorage.getItem("ClickBingoTableTypeElements");
     if(board_json == null || board_json == undefined){
         board_json = getCookie("ClickBingoTableTypeElements_keys");
-        let keys = JSON.parse(board_json);
-        TableTypeElement = {};
-        keys.forEach(k => {
-            board_json = getCookie("ClickBingoTableTypeElements_"+k);
-            if(board_json != null && board_json != undefined)
-                TableTypeElement[k] = JSON.parse(board_json);
-        });
+        if(board_json != null && board_json != undefined){
+            let keys = JSON.parse(board_json);
+            TableTypeElement = {};
+            keys.forEach(k => {
+                board_json = getCookie("ClickBingoTableTypeElements_"+k);
+                if(board_json != null && board_json != undefined)
+                    TableTypeElement[k] = JSON.parse(board_json);
+            });
+        }
     }
     else TableTypeElement = JSON.parse(board_json);
 }
@@ -244,7 +246,7 @@ function addEditableListToNode(node, list, label_text, list_type){
 }
 
 function populateElement(elm_key, elm_item, show){
-    let pElement = document.createElement('p');
+    let pElement = document.createElement('span');
     let hideButton = document.createElement('button');
     let emlContent = document.createElement('div');
     
@@ -291,7 +293,7 @@ function editTableTypeElements(){
     if(bT != null && bT != undefined){
         bT.innerHTML = "";
         
-        const instructions = document.createElement('p');
+        const instructions = document.createElement('span');
         bT.appendChild(instructions);
         instructions.innerHTML += "Constants are the cells that have always the same values<br/>";
         instructions.innerHTML += " -the first 2 are the indexes (from 0 to 1)<br/>";
@@ -306,6 +308,7 @@ function editTableTypeElements(){
         bT.appendChild(elms_list);
         for(let elm_key in TableTypeElement){
             elm_item = document.createElement('li');
+            elm_item.style.minWidth = "80vw";
             elms_list.appendChild(elm_item);
             populateElement(elm_key, elm_item, false);
         }
@@ -317,7 +320,7 @@ function editTableTypeElements(){
             alert("at the moment you can't add a new category. I'm working on that");
         };
         addButton.style.width = "15%";
-        let p = document.createElement('p');
+        let p = document.createElement('span');
         p.appendChild(addButton);
         elm_item.appendChild(p);
     }
