@@ -13,7 +13,9 @@ function reinitializeBingoTable()
             BingoTableBlobCount[i][j] = 0;
         }
     }
-
+    
+    if(!(BingoType in TableTypeElement))
+        return;
     let constElms = TableTypeElement[BingoType]["const_elms"];
     if(constElms != null && constElms != undefined && constElms.length > 0)
         constElms.forEach((elm) =>{
@@ -328,6 +330,8 @@ function changeTags(parent){
     {
         myTypeSelect.innerHTML += "<option value=\"" + key + "\">" + key + "</option>"
     }
+    if(!(BingoType in TableTypeElement))
+        TableTypeElement = key;
     myTypeSelect.value = BingoType;
 
     let myTags = parent.getElementsByTagName('bingo');

@@ -251,7 +251,6 @@ function populateElement(elm_key, elm_item, show){
     let emlContent = document.createElement('div');
     
     pElement.appendChild(hideButton);
-    pElement.appendChild(document.createTextNode(" " + elm_key));
     hideButton.onclick = function(){
         if(emlContent.getAttribute("hidden")){
             emlContent.removeAttribute("hidden");
@@ -273,6 +272,7 @@ function populateElement(elm_key, elm_item, show){
     elm_item.appendChild(emlContent);
 
     if(elm_key in InitialTableTypeElement){
+        pElement.appendChild(document.createTextNode(" " + elm_key));
         let button = document.createElement('button');
         button.innerHTML = "Reset";
         button.onclick = function() {
@@ -282,6 +282,37 @@ function populateElement(elm_key, elm_item, show){
             populateElement(elm_key, elm_item, true);
         };
         emlContent.appendChild(button);
+    }
+    else{
+        let input_name = document.createElement('input');
+        input_name.value = elm_key;
+        input_name.style.width = "60%";
+        input_name.addEventListener("input", () => {
+            TableTypeElement[input_name.value] = TableTypeElement[elm_key];
+            delete TableTypeElement[elm_key];
+            if(BingoType == elm_key){
+                BingoType = input_name.value;
+            }
+            let myTypeSelect = document.getElementById("bingo_type");
+            myTypeSelect.innerHTML = "";
+            for(let key in TableTypeElement)
+            {
+                myTypeSelect.innerHTML += "<option value=\"" + key + "\">" + key + "</option>"
+            }
+            myTypeSelect.value = BingoType;
+            elm_key = input_name.value;
+            saveNewList();
+        }, false);
+        pElement.appendChild(input_name);
+        
+        let button = document.createElement('button');
+        button.innerHTML = " Remove";
+        button.onclick = function() {
+            delete TableTypeElement[elm_key];
+            saveNewList();
+            elm_item.remove();
+        };
+        pElement.appendChild(button);
     }
 
     addEditableListToNode(emlContent, TableTypeElement[elm_key]["const_elms"], "Constants:", 1);
@@ -307,21 +338,32 @@ function editTableTypeElements(){
         const elms_list = document.createElement('ul');
         bT.appendChild(elms_list);
         for(let elm_key in TableTypeElement){
-            elm_item = document.createElement('li');
+            let elm_item = document.createElement('li');
             elm_item.style.minWidth = "80vw";
             elms_list.appendChild(elm_item);
             populateElement(elm_key, elm_item, false);
         }
-        elm_item = document.createElement('li');
-        elms_list.appendChild(elm_item);
+        let add_item = document.createElement('li');
+        elms_list.appendChild(add_item);
         let addButton = document.createElement('button');
         addButton.innerHTML = "| + |";
         addButton.onclick = function(){
-            alert("at the moment you can't add a new category. I'm working on that");
+            //alert("at the moment you can't add a new category. I'm working on that");
+            let elm_key = "type " + Object.keys(TableTypeElement).length;
+            TableTypeElement[elm_key] = {
+                "const_elms": [],
+                "items": []
+            };
+            let elm_item = document.createElement('li');
+            elm_item.style.minWidth = "80vw";
+            elms_list.appendChild(elm_item);
+            populateElement(elm_key, elm_item, false);
+            elms_list.appendChild(add_item);
+            //editTableTypeElements();
         };
         addButton.style.width = "15%";
         let p = document.createElement('span');
         p.appendChild(addButton);
-        elm_item.appendChild(p);
+        add_item.appendChild(p);
     }
 }
