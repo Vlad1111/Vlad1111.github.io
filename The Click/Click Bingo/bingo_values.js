@@ -147,13 +147,15 @@ function loadList(){
     let board_json = sessionStorage.getItem("ClickBingoTableTypeElements");
     if(board_json == null || board_json == undefined){
         board_json = getCookie("ClickBingoTableTypeElements_keys");
-        let keys = JSON.parse(board_json);
-        TableTypeElement = {};
-        keys.forEach(k => {
-            board_json = getCookie("ClickBingoTableTypeElements_"+k);
-            if(board_json != null && board_json != undefined)
-                TableTypeElement[k] = JSON.parse(board_json);
-        });
+        if(board_json != null && board_json != undefined){
+            let keys = JSON.parse(board_json);
+            TableTypeElement = {};
+            keys.forEach(k => {
+                board_json = getCookie("ClickBingoTableTypeElements_"+k);
+                if(board_json != null && board_json != undefined)
+                    TableTypeElement[k] = JSON.parse(board_json);
+            });
+        }
     }
     else TableTypeElement = JSON.parse(board_json);
 }
