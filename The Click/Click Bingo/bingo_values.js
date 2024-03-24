@@ -250,7 +250,6 @@ function populateElement(elm_key, elm_item, show){
     
     pElement.appendChild(hideButton);
     pElement.appendChild(document.createTextNode(" " + elm_key));
-    hideButton.innerHTML = "| > |";
     hideButton.onclick = function(){
         if(emlContent.getAttribute("hidden")){
             emlContent.removeAttribute("hidden");
@@ -261,8 +260,11 @@ function populateElement(elm_key, elm_item, show){
             hideButton.innerHTML = "| > |";
         }
     };
-    if(!show)
+    if(!show){
         hideButton.onclick();
+    }
+    else
+        hideButton.innerHTML = "| v |";
     hideButton.style.width = "15%";
 
     elm_item.appendChild(pElement);

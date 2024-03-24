@@ -36,9 +36,7 @@ function getCookiesStartingWith(name) {
 }
 function getCookie(name) {
     let list = getCookiesStartingWith(name);
-    console.log(list);
     for(k in list){
-        console.log(k + " " + list[k]);
         if(k === name)
             return list[k];
     }
