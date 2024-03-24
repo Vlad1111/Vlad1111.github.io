@@ -16,19 +16,31 @@ function setCookie(name,value,days) {
     }
     document.cookie = name + "=" + (value || "")  + expires + "; path=/";
 }
-function getCookie(name) {
-    var nameEQ = name + "=";
+function getCookiesStartingWith(name) {
+    let list = {};
     var ca = document.cookie.split(';');
     for(var i=0;i < ca.length;i++) {
         var c = ca[i];
         while (c.charAt(0)==' ') c = c.substring(1,c.length);
-        if (c.indexOf(nameEQ) == 0){
-            let value = c.substring(nameEQ.length,c.length);
+        let n = c.split('=')[0];
+        if (c.startsWith(name)){
+            let value = c.substring(n.length+1,c.length);
             //console.log(value);
             value = _revertCookieValue(value);
             //console.log(value.length);
-            return value;
+            //return value;
+            list[n] = value;
         }
+    }
+    return list;
+}
+function getCookie(name) {
+    let list = getCookiesStartingWith(name);
+    console.log(list);
+    for(k in list){
+        console.log(k + " " + list[k]);
+        if(k === name)
+            return list[k];
     }
     return null;
 }
@@ -41,7 +53,7 @@ function eraseAllCookiesStartingWith(name){
         var c = ca[i];
         while (c.charAt(0)==' ') c = c.substring(1,c.length);
         c = c.split('=')[0];
-        console.log(c);
+        //console.log(c);
         if(c.startsWith(name))
             eraseCookie(c);
     }

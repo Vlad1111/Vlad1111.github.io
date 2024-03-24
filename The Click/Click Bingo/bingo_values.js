@@ -185,10 +185,10 @@ function populateOneElementOfList(parentUl, list, i, li_list, list_type){
         li.appendChild(selectList);
         
         //Create and append the options
-        for (i in ConstantElms) {
+        for (j in ConstantElms) {
             var option = document.createElement("option");
-            option.value = -i;
-            option.innerHTML = ConstantElms[i][0];
+            option.value = -j;
+            option.innerHTML = ConstantElms[j][0];
             selectList.appendChild(option);
         }
         selectList.value = l[2];
@@ -203,7 +203,7 @@ function populateOneElementOfList(parentUl, list, i, li_list, list_type){
         list.splice(i, 1);
         li_list.forEach(elm => elm.remove());
         saveNewList();
-        populateEditableListToNode(parentUl, list);
+        populateEditableListToNode(parentUl, list, list_type);
     }
     deleteButton.style.width = "25%";
     li.appendChild(deleteButton);
@@ -212,6 +212,8 @@ function populateOneElementOfList(parentUl, list, i, li_list, list_type){
 function populateEditableListToNode(parentUl, list, list_type){
     const li_list = [];
     for(let i = 0; i < list.length; i++){
+        //console.log(list);
+        //console.log(i + " " + list[i]);
         populateOneElementOfList(parentUl, list, i, li_list, list_type);
     }
 
@@ -228,7 +230,7 @@ function populateEditableListToNode(parentUl, list, list_type){
         else list[list.length] = ["", "", ""];
         li_list.forEach(elm => elm.remove());
         saveNewList();
-        populateEditableListToNode(parentUl, list);
+        populateEditableListToNode(parentUl, list, list_type);
     }
     addButton.style.width = "25%";
     li.appendChild(addButton);
@@ -269,8 +271,8 @@ function populateElement(elm_key, elm_item, show){
     if(elm_key in InitialTableTypeElement){
         let button = document.createElement('button');
         button.innerHTML = "Reset";
-        button.onclick = function() { 
-            TableTypeElement[elm_key] = InitialTableTypeElement[elm_key]; 
+        button.onclick = function() {
+            TableTypeElement[elm_key] = structuredClone(InitialTableTypeElement[elm_key]);
             elm_item.innerHTML = "";
             saveNewList();
             populateElement(elm_key, elm_item, true);
