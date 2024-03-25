@@ -206,7 +206,6 @@ class PetDemon
             if(p.state_time_out <= 0){
                 p._set_next_state()
             }
-            console.log(p.animation_time);
 
             p._checkAnimationFrame();
             p.state.do(p);
