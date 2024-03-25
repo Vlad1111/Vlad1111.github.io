@@ -5,10 +5,12 @@ class PetDemon
             name:"idle",
             loop_time:2000,
             nr_frames:2,
-            state_interval: [2000, 10000],
+            state_interval: [1000, 5000],
             get_next_state: (p) => {
-                if(p.energy <= 0)
+                if(p.energy <= Math.random() * 10)
                     return PetDemon.States.sleep;
+                if(Math.random > 0.5)
+                    return PetDemon.States.idle;
                 return PetDemon.States.walk;
             },
             do: (p) => { }
@@ -25,26 +27,26 @@ class PetDemon
             },
             do: (p) => {
                 if(p.facing_direction > 1)
-                    p.facing_direction = 1;
+                    p.facing_direction -= 0.1;
                 else if(p.facing_direction < -1)
-                    p.facing_direction = -1;
+                    p.facing_direction += 0.1;
                 p.posX += p.facing_direction;
                 p.energy -= 0.1;
-                //console.log(p.posX + " " + p.facing_direction);
 
                 let vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
-                //let vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
                 if(p.posX < 0){
                     p.posX = 0;
-                    p._flip_frame();
+                    p.state_interval_time = 0;
                 }
                 else if(p.posX > vw - 100){
                     p.posX = vw - 100;
-                    p._flip_frame();
+                    p.state_interval_time = 0;
                 }
                 
-                if(Math.random() > 0.995){
+                p.state_interval_time -= PetDemon._delta_time;
+                if(p.state_interval_time <= 0){
                     p._flip_frame();
+                    p.state_interval_time = PetDemon._generateStateTimeOut(1000, 10000);
                 }
 
                 p._showNewPosition();
@@ -59,27 +61,27 @@ class PetDemon
                 return PetDemon.States.walk;
             },
             do: (p) => {
-                if(p.facing_direction > 0 && p.facing_direction < 3)
+                if(p.facing_direction > 0 && p.facing_direction < 5)
                     p.facing_direction += 0.1;
-                else if(p.facing_direction < -1 && p.facing_direction > -3)
+                else if(p.facing_direction < 0 && p.facing_direction > -5)
                     p.facing_direction -= 0.1;
                 p.posX += p.facing_direction;
                 p.energy -= 1;
-                //console.log(p.posX + " " + p.facing_direction);
 
                 let vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
-                //let vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
                 if(p.posX < 0){
                     p.posX = 0;
-                    p._flip_frame();
+                    p.state_interval_time = 0;
                 }
                 else if(p.posX > vw - 100){
                     p.posX = vw - 100;
-                    p._flip_frame();
+                    p.state_interval_time = 0;
                 }
                 
-                if(Math.random() > 0.95){
+                p.state_interval_time -= PetDemon._delta_time;
+                if(p.state_interval_time <= 0){
                     p._flip_frame();
+                    p.state_interval_time = PetDemon._generateStateTimeOut(500, 3000);
                 }
 
                 p._showNewPosition();
@@ -103,7 +105,7 @@ class PetDemon
             get_next_state: (p) => {
                 return PetDemon.States.idle;
             },
-            do: (p) => { p.energy = 100; }
+            do: (p) => { if(p.energy < 0) p.energy = 0; else p.energy += 0.1; }
         },
     };
 
@@ -114,6 +116,7 @@ class PetDemon
     state; 
     last_state;
     state_time_out;
+    state_interval_time;
 
     animation_time;
     last_animation_frame;
@@ -132,6 +135,7 @@ class PetDemon
         this.last_state = this.state;
         this.facing_direction = 1;
         this.state_time_out = PetDemon._generateStateTimeOut(3, 10);
+        this.state_interval_time = this.state_time_out / 2;
 
         this.div.onclick = () => {
             this.last_state = this.state;
@@ -139,6 +143,10 @@ class PetDemon
             this._reset_state_values();
         }
         
+        this._start();
+    }
+
+    _start(){
         setTimeout(PetDemon._update(this), 0);
     }
 
@@ -151,7 +159,14 @@ class PetDemon
         }
         if(index != this.last_animation_frame){
             this.last_animation_frame = index;
-            this.div.style.backgroundImage = "url(" + RelativePathToRoot + "Effects/Pets/Demon/" + this.state.name + index + ".png)";
+            
+            var img = new Image();
+            const div = this.div;
+            img.onload = function() {
+                div.style.backgroundImage = "url(" + img.src + ")";
+            }
+            img.src = RelativePathToRoot + "Effects/Pets/Demon/" + this.state.name + index + ".png";
+
         }
     }
 
@@ -194,8 +209,6 @@ class PetDemon
 
             p._checkAnimationFrame();
             p.state.do(p);
-
-            //console.log(p.state_time_out + " " + p.state.name);
 
             p.animation_time += PetDemon._delta_time;
             p.state_time_out -= PetDemon._delta_time;
