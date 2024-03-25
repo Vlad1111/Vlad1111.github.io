@@ -5,11 +5,11 @@ class PetDemon
             name:"idle",
             loop_time:2000,
             nr_frames:2,
-            state_interval: [1000, 5000],
+            state_interval: [500, 1000],
             get_next_state: (p) => {
                 if(p.energy <= Math.random() * 10)
                     return PetDemon.States.sleep;
-                if(Math.random > 0.5)
+                if(Math.random() > 0.5)
                     return PetDemon.States.idle;
                 return PetDemon.States.walk;
             },
@@ -150,6 +150,7 @@ class PetDemon
         setTimeout(PetDemon._update(this), 0);
     }
 
+    static _loaded_images = []
     _checkAnimationFrame(){
         let index = Math.floor(this.state.nr_frames * this.animation_time / (this.state.loop_time));
         if(index >= this.state.nr_frames){
@@ -163,10 +164,10 @@ class PetDemon
             var img = new Image();
             const div = this.div;
             img.onload = function() {
-                div.style.backgroundImage = "url(" + img.src + ")";
+                PetDemon._loaded_images.push(img.src);
             }
             img.src = RelativePathToRoot + "Effects/Pets/Demon/" + this.state.name + index + ".png";
-
+            div.style.backgroundImage = "url(" + img.src + ")";
         }
     }
 
@@ -201,11 +202,11 @@ class PetDemon
 
     static _delta_time = 20;
     static async _update(p){
-        console.log(p.animation_time);
         while(true){
             if(p.state_time_out <= 0){
                 p._set_next_state()
             }
+            console.log(p.animation_time);
 
             p._checkAnimationFrame();
             p.state.do(p);
