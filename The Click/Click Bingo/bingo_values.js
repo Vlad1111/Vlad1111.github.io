@@ -328,7 +328,7 @@ function editTableTypeElements(){
         bT.appendChild(instructions);
         instructions.innerHTML += "Constants are the cells that have always the same values<br/>";
         instructions.innerHTML += " -the first 2 are the indexes (from 0 to 1)<br/>";
-        instructions.innerHTML += " -the first 3rd is the index of the message<br/>";
+        instructions.innerHTML += " -the first 3rd is constant message (at the moment you can't add new constants)<br/>";
         instructions.innerHTML += "<br/>";
         instructions.innerHTML += "Elements are the cell values list from which it will be selected random<br/>";
         instructions.innerHTML += " -the first is the text (you can inject html code in this one)<br/>";

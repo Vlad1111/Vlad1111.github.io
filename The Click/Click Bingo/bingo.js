@@ -85,6 +85,7 @@ function getCircleHtml()
     return html;
 }
 
+_has_won = false;
 function addCircle(i, j)
 {
     BingoTableBlobCount[i][j] += 1;
@@ -94,6 +95,10 @@ function addCircle(i, j)
     if(verifyBingo(i, j))
     {
         fireConfetti();
+        if(!_has_won){
+            _has_won = true;
+            initializeOnePet();
+        }
     }
 }
 

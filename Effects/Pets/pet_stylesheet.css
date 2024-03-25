@@ -1,7 +1,5 @@
 .Pet {
     position: fixed;
-    top: calc(100vh - 100px);
-    background-color: red;
     width: 100px;
     height: 100px;
 }
