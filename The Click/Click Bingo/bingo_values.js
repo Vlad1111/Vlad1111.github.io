@@ -1,7 +1,7 @@
 const ConstantElms = {
     2: ["<div style=\"font-size: calc(80vmin/10);\">😐</div>", "white", ""],
     3: ["✨ actually wholesome ✨", "lightblue", ""],
-    4: ["actually cursed</br><p style='line-height:0.5;'>😲</br>🙏</p>", "red", ""],
+    4: ["actually cursed</br><text style='line-height:0.5;'>😲</br>🙏</text>", "red", ""],
     5: ["doing voices while reading", "white", ""],
     6: ["", "", "https://cdn3.emoji.gg/emojis/5870_open_eye_crying_laughing.png"],
 };
