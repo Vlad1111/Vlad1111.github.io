@@ -145,14 +145,15 @@ const InitialTableTypeElement =
             ["trans men are men", "random", ""],
             ["oops I helped them", "random", ""],
             ["gender reveal", "random", ""],
-            ["<text style='line-height:0;'><text style='font-size:calc(80vmin/8)'>🔥</text></br>HOT</text>", "random", ""],
+            ["<text style='font-size:calc(80vmin/8)'>🔥</text></div><li><div>HOT</li>", "random", ""],
             ["back-words", "random", ""],
-            ["<text style='line-height:0;'><text style='font-size:calc(80vmin/8)'>😈</text></br>Hail satan</text>", "random", ""],
+            ["<text style='font-size:calc(80vmin/8)'>😈</text></div><li><div>hail satan</li>", "random", ""],
             ["non binary flag", "", "https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/Nonbinary_flag.svg/1920px-Nonbinary_flag.svg.png"],
             ["ace flag", "random", "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Asexual_Pride_Flag.svg/320px-Asexual_Pride_Flag.svg.png"],
             ["accidental compliment", "random", ""],
             ["be gay do crime", "random", ""],
             ["that's the point", "random", ""],
+            ["\"we can always tell\"", "random", ""],
         ]
     }
 };
