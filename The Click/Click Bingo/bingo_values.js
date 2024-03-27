@@ -3,6 +3,7 @@ const ConstantElms = {
     3: ["✨ actually wholesome ✨", "lightblue", ""],
     4: ["actually cursed</br><p style='line-height:0.5;'>😲</br>🙏</p>", "red", ""],
     5: ["doing voices while reading", "white", ""],
+    6: ["", "", "https://cdn3.emoji.gg/emojis/5870_open_eye_crying_laughing.png"],
 };
 let BingoType = sessionStorage.getItem("BingoType");
 if(BingoType == null)
@@ -125,6 +126,34 @@ const InitialTableTypeElement =
                 ["✨ violent ✨", "random", ""],
                 ["WTF", "random", ""],
             ]
+    },
+    "accidental ally": {
+        "const_elms": [[0.5,0.5,-6], [1,1,-3]],
+        "items":[
+            ["trans flag", "", "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Transgender_Pride_flag.svg/1920px-Transgender_Pride_flag.svg.png"],
+            ["tiktok gets it ... right", "random", ""],
+            ["gender affirming", "random", ""],
+            ["\"you will never be a ...\"", "random", ""],
+            ["comic get it right", "random", ""],
+            ["double down", "random", ""],
+            ["\"I made this up to get mad about\"", "random", ""],
+            ["mockery that's badass", "random", ""],
+            ["gender isn't real", "random", ""],
+            ["WTF", "random", ""],
+            ["trans women are women", "random", ""],
+            ["rainbow flag", "", "https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Gay_Pride_Flag.svg/1920px-Gay_Pride_Flag.svg.png"],
+            ["trans men are men", "random", ""],
+            ["oops I helped them", "random", ""],
+            ["gender reveal", "random", ""],
+            ["<text style='line-height:0;'><text style='font-size:calc(80vmin/8)'>🔥</text></br>HOT</text>", "random", ""],
+            ["back-words", "random", ""],
+            ["<text style='line-height:0;'><text style='font-size:calc(80vmin/8)'>😈</text></br>Hail satan</text>", "random", ""],
+            ["non binary flag", "", "https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/Nonbinary_flag.svg/1920px-Nonbinary_flag.svg.png"],
+            ["ace flag", "random", "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Asexual_Pride_Flag.svg/320px-Asexual_Pride_Flag.svg.png"],
+            ["accidental compliment", "random", ""],
+            ["be gay do crime", "random", ""],
+            ["that's the point", "random", ""],
+        ]
     }
 };
 
@@ -149,15 +178,28 @@ function loadList(){
         board_json = getCookie("ClickBingoTableTypeElements_keys");
         if(board_json != null && board_json != undefined){
             let keys = JSON.parse(board_json);
+            let original_keys = Object.keys(InitialTableTypeElement);
+
+            keys.forEach(k => { if(!(k in InitialTableTypeElement)) original_keys.push(k)})
+            keys = original_keys;
+
             TableTypeElement = {};
             keys.forEach(k => {
                 board_json = getCookie("ClickBingoTableTypeElements_"+k);
                 if(board_json != null && board_json != undefined)
                     TableTypeElement[k] = JSON.parse(board_json);
+                else if(k in InitialTableTypeElement)
+                    TableTypeElement[k] = InitialTableTypeElement[k];
             });
         }
     }
-    else TableTypeElement = JSON.parse(board_json);
+    else{
+        TableTypeElement = JSON.parse(board_json);
+        for(k in InitialTableTypeElement){
+            if(TableTypeElement[k] == null || TableTypeElement[k] == undefined)
+                TableTypeElement[k] = InitialTableTypeElement[k];
+        }
+    }
 }
 
 function populateOneElementOfList(parentUl, list, i, li_list, list_type){
